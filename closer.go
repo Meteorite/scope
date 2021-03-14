@@ -18,13 +18,13 @@ import (
 // Close() closes all the io.Closer passed to ContextCloser constructor func regardless of context and finishes goroutine.
 // Cancel() just finishes goroutine and doesn't close anything.
 // Both Close() and Cancel() close inner channel without any check, so calling them both or calling any of them more
-// then once leads to panic! But it is perfectly safe to call either of them once regardless of whether context was
+// then once leads to panic! Nevertheless, it is perfectly safe to call either of them once regardless of whether context was
 // already expired or not.
 //
 // It is convenient to construct ContextCloser and call either Close() or Cancel() at once in defer statement.
 // If io.Closer (e.g. a net.Conn) should be bound not only to context, but also to current func scope, then use Close():
 //  defer scope.Closer(ctx, conn).Close()
-// If io.Closer (e.g. a net.Conn) should be bound to context only while current goroutine is in current func (rarer
+// If io.Closer (e.g. a net.Conn) should be bound to context only while current goroutine is in the current func (rarer
 // case, that might break structured concurrency principle), then use Cancel():
 //  defer scope.Closer(ctx, conn).Cancel()
 type ContextCloser struct {

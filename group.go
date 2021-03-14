@@ -9,6 +9,9 @@ import (
 // ContextGroup is basically a convenient wrapper for errgroup.Group and optional scope.ContextCloser-s.
 // ContextGroup must be constructed with scope.Group. Any number of scope.ContextCloser-s can be added to it using
 // Add[After]Closer[Cancelling]() functions.
+
+// Another way to look at ContextGroup is as at context.Context with its errgroup.Group, where new child goroutines
+// could be run in structured way.
 type ContextGroup struct {
 	ctx    context.Context
 	eg     *errgroup.Group
